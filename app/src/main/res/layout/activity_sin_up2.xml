@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SinUp2">
+
+    <ScrollView
+        android:layout_width="368dp"
+        android:layout_height="344dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="제 1 조 (약관의 목적)
+본 약관은 공간정보산업진흥원이 국토교통부로부터 위탁을 받아 운영하는 공간정보 오픈플랫폼(이하 오픈플랫폼)의 오픈API 서비스(이하 서비스)를 회원이 이용함에 있어 오픈플랫폼과 회원의 권리, 의무 및 책임사항과 서비스 이용의 조건 및 절차를 규정함을 목적으로 합니다.
+
+제 2 조 (용어의 정의)
+①본 약관에서 사용하는 용어의 정의는 아래와 같습니다.
+1. API라 함은 Application Programming Interface의 약자로서 사용자가 목적하는 응용 서비스를 구성할 수 있도록 지원하는 객체 및 함수 체계입니다.
+2. 오픈API 서비스라 함은 회원이 공간정보 오픈플랫폼의 자원을 공유하여 새로운 공간정보 서비스를 창조할 수 있도록 오픈플랫폼이 지원하는 API 체계입니다.
+3. 인증키라 함은 회원의 서비스 요청을 식별하고, 적법한 요청임을 확인할 수 있도록 오픈플랫폼에서 발급한 고유한 값을 말합니다.
+4. 인증키 정보라 함은 회원이 인증키 발급 신청서에 기재한 후 제출한 정보 및 이후 서비스와 관련해 추가로 제출한 정보를 말합니다.
+②본 약관에서 정의하지 않은 용어는 공간정보 오픈플랫폼 이용약관 또는 안내 및 관련법에서 정하는 바에 의합니다.
+제 3 조 (약관의 효력)
+①오픈플랫폼은 본 약관의 내용을 회원이 쉽게 알 수 있도록 서비스 대표 화면에 게시합니다. 다만, 약관의 내용을 회원이 연결화면을 통하여 볼 수 있도록 할 수 있습니다.
+②본 약관의 모든 내용은 서비스에 대한 이용계약(이하 이용계약)이 성립되는 시점부터 적용됩니다.
+"/>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
