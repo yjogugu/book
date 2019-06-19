@@ -2,11 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yjo.book">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- network 상태를 미리 체크하여 연결 안된 경우 다이얼로그를 보여주려면 아래 permission 추가 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- android test 돌릴 때 화면 lock 풀어야 로그인 touch 가능 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- network 상태를 미리 체크하여 연결 안된 경우 다이얼로그를 보여주려면 아래 permission 추가 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- android test 돌릴 때 화면 lock 풀어야 로그인 touch 가능 -->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -17,9 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize">
+        <activity android:name=".test5" />
+        <activity android:name=".chat_list" />
+        <activity android:name=".chat" />
+        <activity android:name=".Comcoment_update" />
+        <activity android:name=".Comment_update" />
+        <activity android:name=".Post_update" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +36,14 @@
         <activity android:name=".profile" />
         <activity android:name=".post_new" />
         <activity android:name=".Myprofile" />
-        <activity android:name=".Comment"></activity>
+        <activity
+            android:name=".Comment"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".Comcomment" />
+        <activity android:name=".good_friend_list" />
+        <activity android:name=".Friend_list" />
+
+        <service android:name=".Sevrice_back" />
     </application>
 
 </manifest>

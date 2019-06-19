@@ -19,6 +19,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'jp.wasabeef:glide-transformations:1.0.6@aar'
     implementation 'com.android.support:design:28.0.0'
     implementation project(path: ':naveridlogin_android_sdk_4.2.0')

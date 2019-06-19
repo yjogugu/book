@@ -1,6 +1,7 @@
 package com.example.yjo.book;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,13 +27,12 @@ public class post_new extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_new);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         editText = (EditText) findViewById(R.id.editText_post);
         button = (Button) findViewById(R.id.post_write);
-
         final Intent intent = getIntent();
         final String emali = intent.getStringExtra("email");
         final String name = intent.getStringExtra("name");
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

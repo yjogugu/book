@@ -2,28 +2,23 @@ package com.example.yjo.book;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
-import android.os.AsyncTask;
+import android.graphics.drawable.AnimationDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.nhn.android.naverlogin.OAuthLogin;
-import com.nhn.android.naverlogin.OAuthLoginHandler;
-import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
-
-import org.json.JSONObject;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.regex.Pattern;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -33,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
     EditText id_edit_text,pw_edit_text;
     Button sinup_button,login_button,test,test2;
     private int login=0;
-    private OAuthLoginButton naverLogInButton;
-    private static OAuthLogin naverLoginInstance;
+    //private OAuthLoginButton naverLogInButton;
+    //private static OAuthLogin naverLoginInstance;
 
+    ImageView imageView;
 
     static final String CLIENT_ID = "U5StJhoEdYKC8ypzTZl7";
     static final String CLIENT_SECRET = "bLW9HPVZ3R";
@@ -44,15 +40,44 @@ public class MainActivity extends AppCompatActivity {
     static Context context;
     private String name;
     private Intent intent;
+    Button test_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        test_button = (Button) findViewById(R.id.button3);
+        imageView = (ImageView) findViewById(R.id.imageView4);
+        ConstraintLayout constraintLayout = findViewById(R.id.main_view_id);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        test_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,test5.class);
+                startActivity(intent);
+            }
+        });
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
+
+        /*getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );*/
+
+
         id_edit_text= (EditText) findViewById(R.id.editText);
         pw_edit_text=(EditText) findViewById(R.id.editText2);
 
+
+        Glide.with(this)
+                .load(R.drawable.b_main)
+                .apply(new RequestOptions().centerCrop().circleCrop())
+                .into(imageView);
 
         sinup_button = findViewById(R.id.sinup_button);
 
@@ -120,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        init();
-        init_View();
+        //init();
+        //init_View();
 
         test=(Button)findViewById(R.id.test);
         test.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //초기화
+    /*//초기화
     private void init(){
         context = this;
         naverLoginInstance = OAuthLogin.getInstance();
@@ -203,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
 
 

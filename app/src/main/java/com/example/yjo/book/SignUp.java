@@ -2,13 +2,16 @@ package com.example.yjo.book;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,6 +38,7 @@ public class SignUp extends AppCompatActivity {
     private ImageView setImage;
     private int a=0,jo=0;
     private boolean check;
+    ConstraintLayout constraintLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,18 @@ public class SignUp extends AppCompatActivity {
         ok_button = (Button)findViewById(R.id.button_ok);
         submit = (Button)findViewById(R.id.btn_submit);
         setImage = (ImageView)findViewById(R.id.setImage);
+        constraintLayout = findViewById(R.id.sing_up_view);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
+
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
 
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +133,7 @@ public class SignUp extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if(editTextPw.getText().toString().equals(editTextPw_ok.getText().toString())) {
-                    setImage.setImageResource(R.drawable.check);
+                    setImage.setImageResource(R.drawable.baseline_panorama_fish_eye_black_18dp);
                     check=true;
                 }
                 else if(editTextPw_ok.getText().toString().length()==0){
@@ -126,7 +142,7 @@ public class SignUp extends AppCompatActivity {
                 }
                 else {
                     check=false;
-                    setImage.setImageResource(R.drawable.x);
+                    setImage.setImageResource(R.drawable.baseline_close_black_18dp);
                 }
             }
 
@@ -210,25 +226,6 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-   /*public void insert(View view) {
-        String name = editTextname.getText().toString();
-        String Id = editTextId.getText().toString();
-        String Pw = editTextPw.getText().toString();
-
-        if(editTextname.getText().toString().length()==0||editTextId.getText().toString().length()==0||editTextPw.getText().toString().length()==0){
-            Toast.makeText(SignUp.this, "빈칸이 있는곳을 확인해주세요", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else if (!checkEmail(editTextId.getText().toString())) {
-            Toast.makeText(SignUp.this, "이메일 형식을 맞춰주세요", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            insertoToDatabase(name, Id, Pw);
-        }
-
-
-
-    }*/
 
 
     public static final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(

@@ -6,12 +6,14 @@ public class post_list_item {
     private String name;
     private String images;
     private String id;
+    private String no;
 
-    public post_list_item(String content, String name , String images , String id) {
+    public post_list_item(String content, String name , String images , String id , String no) {
         this.name = name;
         this.posts = content;
         this.images = images;
         this.id = id;
+        this.no=no;
     }
 
 
@@ -29,5 +31,9 @@ public class post_list_item {
 
     public String getId() {
         return id;
+    }
+
+    public String getNo() {
+        return no;
     }
 }

@@ -2,6 +2,9 @@ package com.example.yjo.book;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -21,6 +24,11 @@ import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +47,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Myprofile extends AppCompatActivity {
+    private Picasso picasso;
+    //private LruCache picassoLruCache;
     ImageView my_image;
     Button save;
     EditText Img_title;
@@ -47,6 +57,9 @@ public class Myprofile extends AppCompatActivity {
     String email,string;
     String url,image1;
     private ArrayList<String>myimage;
+    String resut = "true";
+    String myname;
+    TextView textView;
     int a=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +68,18 @@ public class Myprofile extends AppCompatActivity {
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://13.209.17.127").build();
         Service service = restAdapter.create(Service.class);
 
+        textView = (TextView)findViewById(R.id.my_user_name);
         my_image = (ImageView) findViewById(R.id.imageView);
         save = (Button) findViewById(R.id.myprofile_save);
         Img_title = (EditText) findViewById(R.id.editText3);
 
         Intent intent = getIntent();
         email = intent.getStringExtra("name");
-        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+        myname = intent.getStringExtra("myname");
+        //Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
         string = "http://13.209.17.127/imageupload/uploads/"+email+".jpg";
 
+        textView.setText(myname);
         service.profile_my_image(
                 email,
                 new retrofit.Callback<retrofit.client.Response>() {
@@ -81,18 +97,21 @@ public class Myprofile extends AppCompatActivity {
 
                                 for(int i=0; i<jsonArray.length(); i++){
                                     JSONObject subjsonObject = jsonArray.getJSONObject(i);
-
                                     image1 = subjsonObject.getString("image");
                                     url = "http://13.209.17.127/imageupload/"+image1;
                                 }
-                                Toast.makeText(Myprofile.this, url, Toast.LENGTH_SHORT).show();
-                                Glide.with(Myprofile.this).load(url)
-                                        .apply(new RequestOptions())
-                                        .error(R.drawable.baseline_account_circle_black_18dp)
-                                        .signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-                                        .skipMemoryCache (true)
-                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .centerCrop().circleCrop().into(my_image);
+
+
+                                picasso.with(Myprofile.this)
+                                        .load(url)
+                                        .centerCrop()
+                                        .resize(400,400)
+                                        .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                                        .placeholder(R.drawable.baseline_account_circle_black_18dp)
+                                        .transform(new CircleTransform())
+                                        .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+                                        .into(my_image);
+
                             }
                             catch (JSONException e) {
                                 e.printStackTrace();
@@ -111,16 +130,10 @@ public class Myprofile extends AppCompatActivity {
         );
 
 
-
-
-
-
-
         my_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectImage();
-
             }
         });
 
@@ -128,9 +141,12 @@ public class Myprofile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 upoadImage();
-                Toast.makeText(Myprofile.this, email, Toast.LENGTH_SHORT).show();
+                image();
+                //Toast.makeText(Myprofile.this, email, Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(Myprofile.this,main_view.class);
                 intent1.putExtra("name2",email);
+                my_image.setImageBitmap(null);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent1);
                 finish();
             }
@@ -186,6 +202,70 @@ public class Myprofile extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
         byte[] imgByte = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgByte,Base64.DEFAULT);
+    }
+
+    public void image() {
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://13.209.17.127").build();
+        Service service = restAdapter.create(Service.class);
+        string = "http://13.209.17.127/imageupload/uploads/"+email+".jpg";
+        service.image_change(
+                email,resut,
+                new retrofit.Callback<retrofit.client.Response>() {
+                    @Override
+                    public void success(retrofit.client.Response response, retrofit.client.Response response2) {
+                        BufferedReader reader = null;
+                        String a;
+                        try {
+                            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+                            a = reader.readLine();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                }
+        );
+    }
+
+    public class CircleTransform implements Transformation {
+        @Override
+        public Bitmap transform(Bitmap source) {
+            int size = Math.min(source.getWidth(), source.getHeight());
+
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+
+            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+            if (squaredBitmap != source) {
+                source.recycle();
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint = new Paint();
+            BitmapShader shader = new BitmapShader(squaredBitmap,
+                    BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+            paint.setShader(shader);
+            paint.setAntiAlias(true);
+
+            float r = size / 2f;
+            canvas.drawCircle(r, r, r, paint);
+
+            squaredBitmap.recycle();
+            return bitmap;
+        }
+
+        @Override
+        public String key() {
+            return "circle";
+        }
     }
 
 

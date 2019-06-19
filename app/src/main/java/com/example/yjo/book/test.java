@@ -75,29 +75,13 @@ public class test extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(test.this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new post_adapter(post_list_items);
+        //adapter = new post_adapter(post_list_items);
         recyclerView.setAdapter(adapter);
 
 
     }
 
-    public void test(){
-        String content = "야";
-        String name = "호";
-        recycleritems = new ArrayList<friend_recycleritem>();
 
-
-
-        recycleritems.add(new friend_recycleritem(name,content));
-
-        recyclerView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(test.this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new recycleritem_adapter(recycleritems);
-        recyclerView.setAdapter(adapter);
-    }
 
 
 
